@@ -1,0 +1,102 @@
+
+//http://localhost:8383/JspDemo/Demo.jsp
+//http://localhost:8383/login/web/LoginHome.jsp
+CREATE TABLE clients 
+(
+  client_id serial primary key,
+  name char(120) default NULL,
+) ENGINE=MyISAM;
+
+ 
+select * from clients
+truncate table clients
+
+select (id,c.name,invdate,amount,tax,total,closed,ship_via,note) from invheader i,clients c where  c.client_id=i.client_id order by i.id
+
+insert into invheader i,clients c (id,c.name,invdate,amount,tax,total,closed,ship_via,note)  where  c.client_id=i.client_id order by i.id
+
+
+insert  into clients(client_id,name) values 
+(1,'Dinesh'),(2,'Arjun'),(3,'Ronaldo'),(5,'arya'),(6,'bob'),(7,'rock'),(8,'srini'),(9,'jagish'),(10,'munaf'),(11,'nick'),(12,'david'),(13,'sam'),(14,'ted');
+
+INSERT INTO  clients(client_id,name)
+SELECT x.client_id, 'client #' || x.client_id
+  FROM generate_series(1,10000000) AS x(client_id);
+
+INSERT INTO articles (id, name)
+SELECT x.id, 'article #' || x.id
+  FROM generate_series(1,10000000) AS x(id);
+
+CREATE TABLE invheader (
+  id  serial,
+  invdate date NOT NULL,
+  client_id integer NOT NULL,
+  amount decimal(10,2) NOT NULL default 0.00,
+  tax decimal(10,2) NOT NULL default 0.00,
+  total decimal(10,2) NOT NULL default 0.00,
+  closed BOOLEAN DEFAULT FALSE, 
+  ship_via char (5)  NULL,
+  note char(100) default NULL,
+  PRIMARY KEY  (id)
+);
+Alter table invheader alter column ship_via type varchar using ship_via::varchar;
+
+
+UPDATE invheader
+   SET ship_via = 'Intim' 
+ WHERE id = 5;
+
+select * from invheader
+
+select * from clients
+
+UPDATE invheader
+   SET client_id = 2
+ WHERE id = 2;
+
+
+insert  into invheader(id,invdate,client_id,amount,tax,total,closed,ship_via,note) values 
+(1,to_date('1963-09-01', 'YYYY-MM-DD'),1,100.00,20.00,120.00,TRUE,'tnt','note 1'),
+(2,to_date('1963-09-01', 'YYYY-MM-DD'),1,200.00,40.00,240.00,TRUE,'tnt','note 2'),
+(3,to_date('1963-09-01', 'YYYY-MM-DD'),2,300.00,60.00,360.00,FALSE,'FedEx','invoice 3'),
+(4,to_date('1963-09-01', 'YYYY-MM-DD'),3,150.00,0.00,150.00,TRUE,'tnt','no tax'),
+(5,to_date('1963-09-01', 'YYYY-MM-DD'),3,100.00,0.00,100.00,TRUE,'tnt','no tax'),
+(6,to_date('1963-09-01', 'YYYY-MM-DD'),1,50.00,10.00,60.00,FALSE,'tnt',NULL),
+(7,to_date('1963-09-01', 'YYYY-MM-DD'),2,120.00,12.00,134.00,TRUE,'FedEx',NULL),
+(8,to_date('1963-09-01', 'YYYY-MM-DD'),3,200.00,0.00,200.00,TRUE,'tnt',NULL),
+(9,to_date('1963-09-01', 'YYYY-MM-DD'),1,200.00,40.00,240.00,FALSE,'FedEx',NULL),
+(10,to_date('1963-09-01', 'YYYY-MM-DD'),2,100.00,20.00,120.00,TRUE,'tnt',NULL),
+(11,to_date('1963-09-01', 'YYYY-MM-DD'),1,600.00,120.00,720.00,TRUE,'tnt',NULL),
+(12,to_date('1963-09-01', 'YYYY-MM-DD'),2,700.00,140.00,840.00,FALSE,'FedEx',NULL),
+(13,to_date('1963-09-01', 'YYYY-MM-DD'),3,1000.00,0.00,1000.00,TRUE,'tnt',NULL); 
+
+select id,c.name,invdate,amount,tax,total,closed,ship_via,note from invheader i,clients c 
+where  c.client_id=i.client_id order by i.id
+
+select * from invheader
+select * from clients
+
+CREATE TABLE invlines (
+  id integer NOT NULL,
+  num serial,
+  item char(20) default NULL,
+  qty decimal(8,2) NOT NULL default 0.00,
+  unit decimal(10,2) NOT NULL,
+  PRIMARY KEY  (id,num)
+) ;
+
+
+insert  into invlines(id,num,item,qty,unit) values (1,1,'item 1',1.00,20.00),(1,2,'item 2',2.00,40.00),(2,1,'item 1',2.00,20.00),(2,2,'item 2',4.00,40.00),(3,1,'item 3',1.00,100.00),(3,2,'item 4',1.00,200.00),(4,1,'item 1',1.00,100.00),(4,2,'item 2',1.00,50.00),(5,1,'item 3',1.00,100.00),(6,1,'item 4',1.00,50.00),(7,1,'item 5',2.00,10.00),(7,2,'item 1',1.00,100.00),(8,1,'item 3',1.00,50.00),(8,2,'item 2',1.00,120.00),(8,3,'item 3',1.00,30.00),(9,1,'item 6',1.00,140.00),(9,2,'item 3',1.00,60.00),(10,1,'item 5',3.00,10.00),(10,2,'item 4',1.00,70.00),(11,1,'item 1',2.00,100.00),(11,2,'item 2',3.00,50.00),(11,3,'item 3',1.00,50.00),(11,4,'item 4',1.00,200.00),(12,1,'item 4',1.00,300.00),(12,2,'item 2',1.00,400.00),(13,1,'item 13',1.00,1000.00);
+
+select * from invlines
+
+CREATE TABLE items 
+(
+	item_id serial,
+	item VARCHAR (200),
+	item_cd VARCHAR (15),
+	PRIMARY KEY ( item_id )
+);
+select * from items;
+
+alter table invheader add column closed char (3) DEFAULT Not NULL after note, add column ship_via char (3)  NULL  after closed;
