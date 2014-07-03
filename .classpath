@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/app/apache-tomcat-6.0.29/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="/home/appuser/Downloads/jdbc driver/jdbc-postgresql.jar"/>
+	<classpathentry kind="lib" path="/home/appuser/Downloads/driver/jdbc-postgresql.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-openjdk-i386">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
