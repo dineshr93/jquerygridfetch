@@ -1,0 +1,48 @@
+﻿INSERT INTO  clients(name)
+SELECT 'client #' || x.name
+  FROM generate_series(100) AS x(name);
+
+insert inheader 1lakh
+
+INSERT INTO  invheader(invdate,client_id,amount,tax,total,closed,ship_via,note)
+SELECT '1963-09-01',x.n,x.n,x.n,x.n,'TRUE','tnt','note'|| x.n
+  FROM generate_series(1001,100000) AS x(n);
+
+to_date('1963-09-01', 'YYYY-MM-DD')
+
+sample: [INSERT INTO articles (name)
+SELECT x.id,'article #' || x.id
+  FROM generate_series(1,10000000) AS x(id);]
+
+  
+drop table invheader
+
+
+drop table clients
+
+
+
+  select * from clients
+
+  
+    select * from invheader
+
+
+  DELETE FROM clients WHERE client_id>41
+
+  CREATE TABLE invheader (
+  id  bigserial,
+  invdate date NOT NULL,
+  client_id integer NOT NULL,
+  amount decimal(10,2) NOT NULL default 0.00,
+  tax decimal(10,2) NOT NULL default 0.00,
+  total decimal(10,2) NOT NULL default 0.00,
+  closed BOOLEAN DEFAULT FALSE, 
+  ship_via varchar   NULL,
+  note varchar default NULL,
+  PRIMARY KEY  (id)
+);
+
+
+
+  CREATE TABLE clients ( client_id bigserial primary key, name char(20) default NULL)
